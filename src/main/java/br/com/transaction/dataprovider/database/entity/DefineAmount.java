@@ -2,6 +2,6 @@ package br.com.transaction.dataprovider.database.entity;
 
 import java.math.BigDecimal;
 
-public sealed interface DefineAmount permits OperationsType {
+public interface DefineAmount {
     BigDecimal defineAmount(final BigDecimal amount);
 }
