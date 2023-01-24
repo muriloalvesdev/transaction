@@ -7,7 +7,7 @@ import java.util.UUID;
 
 public interface ConstantsTests {
     String DOCUMENT_NUMBER = "12345678900";
-    UUID ACCOUNT_ID = UUID.randomUUID();
+    String ACCOUNT_ID = UUID.randomUUID().toString();
     OperationsType PAGAMENTO = OperationsType.PAGAMENTO;
     OperationsType COMPRA_A_VISTA = OperationsType.COMPRA_A_VISTA;
     OperationsType COMPRA_PARCELADA = OperationsType.COMPRA_PARCELADA;

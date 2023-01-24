@@ -33,7 +33,7 @@ class BaseTest {
         return Account.builder().uuid(dto.getAccountId()).documentNumber(dto.getDocumentNumber()).build();
     }
 
-    protected Account toAccountEntity(final UUID accountId) {
+    protected Account toAccountEntity(final String accountId) {
         return Account.builder().uuid(accountId).documentNumber(DOCUMENT_NUMBER).build();
     }
 
@@ -45,7 +45,7 @@ class BaseTest {
     }
 
     protected Account toAccountEntity(
-        final UUID accountId,
+        final String accountId,
         final String documentNumber) {
         return Account.builder()
             .uuid(accountId)
@@ -84,10 +84,10 @@ class BaseTest {
     }
 
     protected static Stream<Arguments> transactionDtosValids() {
-        return Stream.of(new TransactionDto(UUID.randomUUID(), PAGAMENTO.getTypeName(), AMOUNT_POSITIVE),
-            new TransactionDto(UUID.randomUUID(), COMPRA_A_VISTA.getTypeName(), AMOUNT_NEGATIVE),
-            new TransactionDto(UUID.randomUUID(), COMPRA_PARCELADA.getTypeName(), AMOUNT_NEGATIVE),
-            new TransactionDto(UUID.randomUUID(), SAQUE.getTypeName(), AMOUNT_NEGATIVE)).map(Arguments::of);
+        return Stream.of(new TransactionDto(UUID.randomUUID().toString(), PAGAMENTO.getTypeName(), AMOUNT_POSITIVE),
+            new TransactionDto(UUID.randomUUID().toString(), COMPRA_A_VISTA.getTypeName(), AMOUNT_NEGATIVE),
+            new TransactionDto(UUID.randomUUID().toString(), COMPRA_PARCELADA.getTypeName(), AMOUNT_NEGATIVE),
+            new TransactionDto(UUID.randomUUID().toString(), SAQUE.getTypeName(), AMOUNT_NEGATIVE)).map(Arguments::of);
     }
 
     protected static <T> T verifyWasInvoked(final T mock, final int quantityOfInvocation) {

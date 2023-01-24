@@ -4,7 +4,7 @@ import java.util.UUID;
 
 public class AccountNotFoundException extends RuntimeException {
 
-    public AccountNotFoundException(final UUID accountId) {
+    public AccountNotFoundException(final String accountId) {
         super(String.format("Account not found with id=%s", accountId));
     }
 

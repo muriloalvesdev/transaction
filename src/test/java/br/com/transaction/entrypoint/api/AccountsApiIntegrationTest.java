@@ -76,12 +76,12 @@ class AccountsApiIntegrationTest extends BaseIntegrationTests {
     void shouldFindWithSuccess(final AccountDto dto) throws Exception {
         //GIVEN
         final var accountEntity = toAccountEntity(dto);
-        final var uri = URI.create(BASE_URL_ACCOUNTS.concat(dto.getAccountId().toString()));
+        final var uri = URI.create(BASE_URL_ACCOUNTS.concat(dto.getAccountId()));
         given(this.accountGatewayMock.find(dto.getAccountId()))
             .willReturn(Optional.of(accountEntity));
 
         //WHEN
-        final var resultActions = requestGet(dto.getAccountId(), uri);
+        final var resultActions = requestGet(uri);
 
         //THEN
         final var responseJson = resultActions

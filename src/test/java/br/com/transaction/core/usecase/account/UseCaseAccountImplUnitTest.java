@@ -3,8 +3,6 @@ package br.com.transaction.core.usecase.account;
 import br.com.transaction.BaseUnitTest;
 import br.com.transaction.core.exception.AccountNotFoundException;
 import br.com.transaction.core.exception.AlreadyDocumentNumberException;
-import br.com.transaction.core.usecase.account.UseCaseAccount;
-import br.com.transaction.core.usecase.account.UseCaseAccountImpl;
 import br.com.transaction.dataprovider.database.entity.Account;
 import br.com.transaction.entrypoint.dto.AccountDto;
 import br.com.transaction.providers.AccountDtoProviderTests;
@@ -71,6 +69,7 @@ class UseCaseAccountImplUnitTest extends BaseUnitTest {
     void shouldFindAccountWithSuccess(final AccountDto dto) {
         //GIVEN
         final var accountEntity = toAccountEntity(dto);
+
         given(this.accountGatewayMock.find(dto.getAccountId()))
             .willReturn(Optional.ofNullable(accountEntity));
 
@@ -88,6 +87,7 @@ class UseCaseAccountImplUnitTest extends BaseUnitTest {
     void shouldTryFindAccountButReturnError(final AccountDto dto) {
         //GIVEN
         final var exceptionExpected = new AccountNotFoundException(dto.getAccountId());
+
         given(this.accountGatewayMock.find(dto.getAccountId()))
             .willReturn(Optional.empty());
 

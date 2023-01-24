@@ -23,7 +23,7 @@ public class UseCaseTransactionImpl implements UseCaseTransaction {
         this.accountGateway = accountGateway;
     }
 
-    public UUID save(final TransactionDto dto) {
+    public String save(final TransactionDto dto) {
         final OperationsType type = OperationsType.fromString(dto.getOperationType());
 
         final var builder = Transaction.builder()
@@ -33,7 +33,10 @@ public class UseCaseTransactionImpl implements UseCaseTransaction {
 
         final Account accountEntity = getAccountEntity(dto);
 
-        final Transaction transactionEntity = builder.account(accountEntity).build();
+        final Transaction transactionEntity = builder
+            .account(accountEntity)
+            .uuid(UUID.randomUUID().toString())
+            .build();
 
         return this.transactionGateway.save(transactionEntity).getUuid();
     }

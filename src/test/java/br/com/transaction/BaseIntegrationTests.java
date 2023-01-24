@@ -13,7 +13,6 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
 
 import java.net.URI;
-import java.util.UUID;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
@@ -41,7 +40,7 @@ public class BaseIntegrationTests extends BaseTest {
     @MockBean
     protected TransactionGateway transactionGateway;
 
-    protected ResultActions requestGet(final UUID accountId, final URI path) throws Exception {
+    protected ResultActions requestGet(final URI path) throws Exception {
         return this.mockMvc.perform(get(path));
     }
 

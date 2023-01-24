@@ -5,7 +5,6 @@ import br.com.transaction.dataprovider.database.entity.Account;
 import br.com.transaction.dataprovider.database.repository.AccountRepository;
 
 import java.util.Optional;
-import java.util.UUID;
 
 public class AccountGatewayImpl implements AccountGateway {
 
@@ -19,7 +18,7 @@ public class AccountGatewayImpl implements AccountGateway {
         return this.repository.saveAndFlush(entity);
     }
 
-    public Optional<Account> find(final UUID accountId) {
+    public Optional<Account> find(final String accountId) {
         return this.repository.findById(accountId);
     }
     public Boolean existsByDocumentNumber(final String documentNumber) {

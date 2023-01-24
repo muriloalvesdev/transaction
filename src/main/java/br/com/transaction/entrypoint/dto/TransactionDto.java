@@ -6,14 +6,13 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;
-import java.util.UUID;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class TransactionDto {
 
-    private UUID accountId;
+    private String accountId;
     private String operationType;
     private BigDecimal amount;
 

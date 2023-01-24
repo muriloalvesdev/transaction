@@ -2,8 +2,6 @@ package br.com.transaction.core.usecase.transaction;
 
 import br.com.transaction.BaseUnitTest;
 import br.com.transaction.core.exception.InvalidAmountException;
-import br.com.transaction.core.usecase.transaction.UseCaseTransaction;
-import br.com.transaction.core.usecase.transaction.UseCaseTransactionImpl;
 import br.com.transaction.dataprovider.database.entity.OperationsType;
 import br.com.transaction.dataprovider.database.entity.Transaction;
 import br.com.transaction.entrypoint.dto.TransactionDto;

@@ -16,18 +16,19 @@ public class UseCaseAccountImpl implements UseCaseAccount {
         this.gateway = gateway;
     }
 
-    public UUID save(final AccountDto dto) {
+    public String save(final AccountDto dto) {
         if (this.gateway.existsByDocumentNumber(dto.getDocumentNumber()))
             throw new AlreadyDocumentNumberException(dto.getDocumentNumber());
 
         final Account entity = Account.builder()
             .documentNumber(dto.getDocumentNumber())
+            .uuid(UUID.randomUUID().toString())
             .build();
 
         return this.gateway.save(entity).getUuid();
     }
 
-    public AccountDto find(final UUID accountId) {
+    public AccountDto find(final String accountId) {
         return this.gateway.find(accountId)
             .map(AccountDto::build)
             .orElseThrow(() -> new AccountNotFoundException(accountId));

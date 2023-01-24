@@ -13,8 +13,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import java.util.UUID;
-
 @RestController
 @RequestMapping("accounts")
 @RequiredArgsConstructor
@@ -25,7 +23,7 @@ class AccountsApi {
     @PostMapping
     public ResponseEntity<Object> save(
         @RequestBody @Validated final AccountDto dto) {
-        final UUID uuid = this.useCaseAccount.save(dto);
+        final var uuid = this.useCaseAccount.save(dto);
         return ResponseEntity.created(
                 ServletUriComponentsBuilder.fromCurrentContextPath()
                     .path("/accounts/{id}")
@@ -36,8 +34,8 @@ class AccountsApi {
 
     @GetMapping("{accountId}")
     public ResponseEntity<AccountDto> find(
-        @PathVariable(name = "accountId") final UUID accountId) {
-        final AccountDto dto = this.useCaseAccount.find(accountId);
+        @PathVariable(name = "accountId") final String accountId) {
+        final var dto = this.useCaseAccount.find(accountId);
         return ResponseEntity.ok(dto);
     }
 

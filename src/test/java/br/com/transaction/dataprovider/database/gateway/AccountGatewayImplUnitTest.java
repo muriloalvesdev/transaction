@@ -12,6 +12,7 @@ import org.junit.jupiter.params.provider.ArgumentsSource;
 import org.junit.jupiter.params.provider.MethodSource;
 
 import java.util.Optional;
+import java.util.UUID;
 import java.util.stream.Stream;
 
 import static br.com.transaction.ConstantsTests.ACCOUNT_ID;
@@ -45,11 +46,13 @@ class AccountGatewayImplUnitTest extends BaseUnitTest {
     @DisplayName("Mock - Deve buscar uma conta na base e encontrá-la.")
     void mustSearchAndFound(final Account enttiy) {
         //GIVEN
-        given(this.accountRepositoryMock.findById(enttiy.getUuid()))
+        final var accountId = enttiy.getUuid();
+
+        given(this.accountRepositoryMock.findById(accountId))
             .willReturn(Optional.of(enttiy));
 
         //WHEN
-        final var responseOptional = this.gateway.find(enttiy.getUuid());
+        final var responseOptional = this.gateway.find(accountId);
 
         //THEN
         verifyWasInvoked(this.accountRepositoryMock, 1)

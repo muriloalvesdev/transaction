@@ -30,7 +30,7 @@ class TransactionApiIntegrationTest extends BaseIntegrationTests {
     void shouldSaveWithSuccess(final TransactionDto dto) throws Exception {
         //GIVEN
         final var accountEntity = toAccountEntity(
-            UUID.randomUUID(),
+            UUID.randomUUID().toString(),
             String.valueOf(new Random().nextInt()));
 
         given(this.accountGatewayMock.find(dto.getAccountId()))

@@ -12,14 +12,11 @@ import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.ForeignKey;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import java.math.BigDecimal;
-import java.util.UUID;
 
 @Getter
 @Builder
@@ -30,8 +27,7 @@ import java.util.UUID;
 public class Transaction extends BaseEntity {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    protected UUID uuid;
+    private String uuid;
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(
