@@ -7,6 +7,8 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import java.util.UUID;
+
 import static br.com.transaction.ConstantsTests.AMOUNT_POSITIVE;
 import static br.com.transaction.ConstantsTests.PAGAMENTO;
 import static org.junit.jupiter.api.Assertions.assertFalse;
@@ -34,6 +36,7 @@ class TransactionRepositoryIntegrationTest extends BaseDataBaseTest {
         transactionEntity = this.transactionRepository
             .saveAndFlush(
                 Transaction.builder()
+                    .uuid(UUID.randomUUID().toString())
                     .type(PAGAMENTO)
                     .amount(AMOUNT_POSITIVE)
                     .account(accountSaved)
