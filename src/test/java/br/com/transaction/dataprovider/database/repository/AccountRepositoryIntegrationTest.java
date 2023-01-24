@@ -9,12 +9,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-class AccountTestRepositoryIntegration extends BaseDataBaseTest {
+class AccountRepositoryIntegrationTest extends BaseDataBaseTest {
 
-    @Autowired
-    private AccountRepository repository;
+    private final AccountRepository repository;
 
     private Account accountEntity;
+
+    @Autowired
+    public AccountRepositoryIntegrationTest(final AccountRepository repository) {
+        this.repository = repository;
+    }
 
     @BeforeEach
     void setUp() {
@@ -24,7 +28,7 @@ class AccountTestRepositoryIntegration extends BaseDataBaseTest {
     @Test
     @DisplayName(
         """
-            Integration - Deve buscar a identidade salva no inicio da execucao dos testes  
+            Integration - Deve buscar a identidade salva no inicio da execucao dos testes
             para garantir que foi salva.
         """
     )

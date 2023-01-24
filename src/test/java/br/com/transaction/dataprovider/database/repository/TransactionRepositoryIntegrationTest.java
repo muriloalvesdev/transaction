@@ -12,15 +12,21 @@ import static br.com.transaction.ConstantsTests.PAGAMENTO;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-class TransactionTestRepositoryIntegration extends BaseDataBaseTest {
+class TransactionRepositoryIntegrationTest extends BaseDataBaseTest {
 
-    @Autowired
-    private TransactionRepository transactionRepository;
+    private final TransactionRepository transactionRepository;
 
-    @Autowired
-    private AccountRepository accountRepository;
+    private final AccountRepository accountRepository;
 
     private Transaction transactionEntity;
+
+    @Autowired
+    public TransactionRepositoryIntegrationTest(
+        final TransactionRepository transactionRepository,
+        final AccountRepository accountRepository) {
+        this.transactionRepository = transactionRepository;
+        this.accountRepository = accountRepository;
+    }
 
     @BeforeEach
     void setUp() {
