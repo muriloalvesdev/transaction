@@ -17,7 +17,7 @@ script:
     - ./.ci/unit-tests.sh
 
 codecov:
-    token: 9bf0508f-b097-49c5-82b8-9aac3f1c458c
+    token: 66c93800-0c25-48c6-95c0-fea82cd5dd4
 
 after_success:
     - bash <(curl -s https://codecov.io/bash)
