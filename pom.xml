@@ -67,7 +67,7 @@
                         <exclude>**/infrastructure/config/**</exclude>
                         <exclude>**/database/entity/**</exclude>
                         <exclude>**/database/exception/**</exclude>
-                        <exclude>**/entriypoint/dto/**</exclude>
+                        <exclude>**/entrypoint/dto/**</exclude>
                     </excludes>
                 </configuration>
                 <executions>
