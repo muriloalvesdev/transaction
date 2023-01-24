@@ -1,0 +1,23 @@
+language: java
+
+dist: trusty
+
+jdk:
+    - openjdk17
+
+sudo: true
+
+before_install:
+    - chmod +x mvnw
+
+script:
+    - chmod +x ./.ci/unit-test.sh
+    - chmod +x ./.ci/integration-test.sh
+    - ./.ci/integration-tests.sh
+    - ./.ci/unit-tests.sh
+
+codecov:
+    token: 9bf0508f-b097-49c5-82b8-9aac3f1c458c
+
+after_success:
+    - bash <(curl -s https://codecov.io/bash)
