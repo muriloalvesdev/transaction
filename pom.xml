@@ -14,6 +14,9 @@
     <name>transaction</name>
     <description>Transaction project, Pismo challenge</description>
     <properties>
+        <maven.compiler.source>17</maven.compiler.source>
+        <maven.compiler.target>17</maven.compiler.target>
+
         <java.version>17</java.version>
     </properties>
     <dependencies>
