@@ -1,14 +1,13 @@
-package br.com.transaction.core.usecase.impl;
+package br.com.transaction.core.usecase.transaction;
 
 import br.com.transaction.core.exception.AccountNotFoundException;
 import br.com.transaction.core.exception.InvalidAmountException;
 import br.com.transaction.core.gateway.AccountGateway;
 import br.com.transaction.core.gateway.TransactionGateway;
-import br.com.transaction.core.usecase.UseCaseTransaction;
 import br.com.transaction.dataprovider.database.entity.Account;
 import br.com.transaction.dataprovider.database.entity.OperationsType;
 import br.com.transaction.dataprovider.database.entity.Transaction;
-import br.com.transaction.entriypoint.dto.TransactionDto;
+import br.com.transaction.entrypoint.dto.TransactionDto;
 
 import java.util.UUID;
 
@@ -27,7 +26,7 @@ public class UseCaseTransactionImpl implements UseCaseTransaction {
     public UUID save(final TransactionDto dto) {
         final OperationsType type = OperationsType.fromString(dto.getOperationType());
 
-        final Transaction.TransactionBuilder builder = Transaction.builder()
+        final var builder = Transaction.builder()
             .type(type);
 
         setAmount(dto, type, builder);
@@ -48,7 +47,7 @@ public class UseCaseTransactionImpl implements UseCaseTransaction {
             throw new InvalidAmountException(type);
         }
 
-        final var amount = type.convertAmount(transactionDto.getAmount());
+        final var amount = type.defineAmount(transactionDto.getAmount());
         builder.amount(amount);
     }
 

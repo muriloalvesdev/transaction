@@ -2,8 +2,8 @@ package br.com.transaction;
 
 import br.com.transaction.core.gateway.AccountGateway;
 import br.com.transaction.core.gateway.TransactionGateway;
-import br.com.transaction.core.usecase.UseCaseAccount;
-import br.com.transaction.core.usecase.UseCaseTransaction;
+import br.com.transaction.core.usecase.account.UseCaseAccount;
+import br.com.transaction.core.usecase.transaction.UseCaseTransaction;
 import br.com.transaction.dataprovider.database.repository.AccountRepository;
 import br.com.transaction.dataprovider.database.repository.TransactionRepository;
 import org.junit.jupiter.api.Tag;

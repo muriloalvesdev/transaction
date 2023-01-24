@@ -1,7 +1,8 @@
-package br.com.transaction.entriypoint.api;
+package br.com.transaction.entrypoint.api;
 
 import br.com.transaction.BaseApiUnitTest;
-import br.com.transaction.entriypoint.dto.TransactionDto;
+import br.com.transaction.entrypoint.api.TransactionApi;
+import br.com.transaction.entrypoint.dto.TransactionDto;
 import br.com.transaction.providers.TransactionDtoProviderTests;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;

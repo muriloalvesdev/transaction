@@ -1,4 +1,4 @@
-package br.com.transaction.entriypoint.api;
+package br.com.transaction.entrypoint.api;
 
 import br.com.transaction.BaseIntegrationTests;
 import br.com.transaction.core.exception.AccountNotFoundException;
@@ -6,8 +6,8 @@ import br.com.transaction.core.exception.InvalidAmountException;
 import br.com.transaction.dataprovider.database.entity.OperationsType;
 import br.com.transaction.dataprovider.database.entity.Transaction;
 import br.com.transaction.dataprovider.database.exception.InvalidOperationTypeException;
-import br.com.transaction.entriypoint.dto.ResponseError;
-import br.com.transaction.entriypoint.dto.TransactionDto;
+import br.com.transaction.entrypoint.dto.ResponseError;
+import br.com.transaction.entrypoint.dto.TransactionDto;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
@@ -53,7 +53,7 @@ class TransactionApiIntegrationTest extends BaseIntegrationTests {
     @MethodSource("transactionDtosValids")
     @DisplayName(
         """
-        Integration - Deve tentar salvar uma transacao para cada tipo de operacoes validas existentes, 
+        Integration - Deve tentar salvar uma transacao para cada tipo de operacoes validas existentes,
         mas todas elas não contém uma conta válida na base de dados.
         """)
     void shouldTrySaveTransctionButAccountNotFound(final TransactionDto dto) throws Exception {
@@ -116,7 +116,7 @@ class TransactionApiIntegrationTest extends BaseIntegrationTests {
     @MethodSource("transactionDtosInvalidOperationTypes")
     @DisplayName(
         """
-        Integration - Deve tentar salvar uma transacao para cada tipo de operacoes 
+        Integration - Deve tentar salvar uma transacao para cada tipo de operacoes
         com operation_types invalidos e retornar erro.
         """)
     void shouldTrySaveTransactionsButReturnExceptionWhenOperationTypesIsInvalid(final TransactionDto dto) throws Exception {

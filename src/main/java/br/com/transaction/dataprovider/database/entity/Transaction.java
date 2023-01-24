@@ -21,8 +21,6 @@ import javax.persistence.Table;
 import java.math.BigDecimal;
 import java.util.UUID;
 
-import static br.com.transaction.dataprovider.database.entity.OperationsType.PAGAMENTO;
-
 @Getter
 @Builder
 @AllArgsConstructor(access = AccessLevel.PRIVATE)

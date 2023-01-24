@@ -1,6 +1,6 @@
-package br.com.transaction.core.usecase;
+package br.com.transaction.core.usecase.account;
 
-import br.com.transaction.entriypoint.dto.AccountDto;
+import br.com.transaction.entrypoint.dto.AccountDto;
 
 import java.util.UUID;
 

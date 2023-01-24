@@ -1,6 +1,6 @@
 package br.com.transaction.providers;
 
-import br.com.transaction.entriypoint.dto.TransactionDto;
+import br.com.transaction.entrypoint.dto.TransactionDto;
 import org.junit.jupiter.api.extension.ExtensionContext;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.ArgumentsProvider;

@@ -1,4 +1,4 @@
-package br.com.transaction.entriypoint.dto;
+package br.com.transaction.entrypoint.dto;
 
 import br.com.transaction.dataprovider.database.entity.Account;
 import com.sun.istack.NotNull;

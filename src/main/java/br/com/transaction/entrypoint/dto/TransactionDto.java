@@ -1,4 +1,4 @@
-package br.com.transaction.entriypoint.dto;
+package br.com.transaction.entrypoint.dto;
 
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;

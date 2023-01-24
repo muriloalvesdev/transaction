@@ -1,10 +1,10 @@
-package br.com.transaction.entriypoint.api;
+package br.com.transaction.entrypoint.api;
 
 import br.com.transaction.BaseIntegrationTests;
 import br.com.transaction.core.exception.AlreadyDocumentNumberException;
 import br.com.transaction.dataprovider.database.entity.Account;
-import br.com.transaction.entriypoint.dto.AccountDto;
-import br.com.transaction.entriypoint.dto.ResponseError;
+import br.com.transaction.entrypoint.dto.AccountDto;
+import br.com.transaction.entrypoint.dto.ResponseError;
 import br.com.transaction.providers.AccountDtoProviderTests;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;

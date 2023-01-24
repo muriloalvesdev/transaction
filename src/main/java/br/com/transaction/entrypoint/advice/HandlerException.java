@@ -1,10 +1,10 @@
-package br.com.transaction.entriypoint.advice;
+package br.com.transaction.entrypoint.advice;
 
 import br.com.transaction.core.exception.AccountNotFoundException;
 import br.com.transaction.core.exception.AlreadyDocumentNumberException;
 import br.com.transaction.core.exception.InvalidAmountException;
 import br.com.transaction.dataprovider.database.exception.InvalidOperationTypeException;
-import br.com.transaction.entriypoint.dto.ResponseError;
+import br.com.transaction.entrypoint.dto.ResponseError;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;

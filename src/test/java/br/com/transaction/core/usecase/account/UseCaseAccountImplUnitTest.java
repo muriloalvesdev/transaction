@@ -1,11 +1,12 @@
-package br.com.transaction.core.usecase.impl;
+package br.com.transaction.core.usecase.account;
 
 import br.com.transaction.BaseUnitTest;
 import br.com.transaction.core.exception.AccountNotFoundException;
 import br.com.transaction.core.exception.AlreadyDocumentNumberException;
-import br.com.transaction.core.usecase.UseCaseAccount;
+import br.com.transaction.core.usecase.account.UseCaseAccount;
+import br.com.transaction.core.usecase.account.UseCaseAccountImpl;
 import br.com.transaction.dataprovider.database.entity.Account;
-import br.com.transaction.entriypoint.dto.AccountDto;
+import br.com.transaction.entrypoint.dto.AccountDto;
 import br.com.transaction.providers.AccountDtoProviderTests;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;

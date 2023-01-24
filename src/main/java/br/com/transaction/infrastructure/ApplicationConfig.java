@@ -2,10 +2,10 @@ package br.com.transaction.infrastructure;
 
 import br.com.transaction.core.gateway.AccountGateway;
 import br.com.transaction.core.gateway.TransactionGateway;
-import br.com.transaction.core.usecase.UseCaseAccount;
-import br.com.transaction.core.usecase.UseCaseTransaction;
-import br.com.transaction.core.usecase.impl.UseCaseAccountImpl;
-import br.com.transaction.core.usecase.impl.UseCaseTransactionImpl;
+import br.com.transaction.core.usecase.account.UseCaseAccount;
+import br.com.transaction.core.usecase.transaction.UseCaseTransaction;
+import br.com.transaction.core.usecase.account.UseCaseAccountImpl;
+import br.com.transaction.core.usecase.transaction.UseCaseTransactionImpl;
 import br.com.transaction.dataprovider.database.gateway.AccountGatewayImpl;
 import br.com.transaction.dataprovider.database.gateway.TransactionGatewayImpl;
 import br.com.transaction.dataprovider.database.repository.AccountRepository;

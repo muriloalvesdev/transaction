@@ -1,7 +1,7 @@
-package br.com.transaction.entriypoint.api;
+package br.com.transaction.entrypoint.api;
 
-import br.com.transaction.core.usecase.UseCaseAccount;
-import br.com.transaction.entriypoint.dto.AccountDto;
+import br.com.transaction.core.usecase.account.UseCaseAccount;
+import br.com.transaction.entrypoint.dto.AccountDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;

@@ -1,33 +1,31 @@
 package br.com.transaction.dataprovider.database.entity;
 
-import br.com.transaction.dataprovider.AmountStrategy;
 import br.com.transaction.dataprovider.database.exception.InvalidOperationTypeException;
 
 import java.math.BigDecimal;
 import java.util.Arrays;
 
-public enum OperationsType implements AmountStrategy {
+public enum OperationsType implements DefineAmount {
     COMPRA_A_VISTA("COMPRA A VISTA", "NEGATIVE") {
-        public BigDecimal convertAmount(final BigDecimal amount) {
+        public BigDecimal defineAmount(final BigDecimal amount) {
             return amount.negate();
         }
     },
     COMPRA_PARCELADA("COMPRA PARCELADA", "NEGATIVE") {
-        public BigDecimal convertAmount(final BigDecimal amount) {
+        public BigDecimal defineAmount(final BigDecimal amount) {
             return amount.negate();
         }
     },
     SAQUE("SAQUE", "NEGATIVE") {
-        public BigDecimal convertAmount(final BigDecimal amount) {
+        public BigDecimal defineAmount(final BigDecimal amount) {
             return amount.negate();
         }
     },
     PAGAMENTO("PAGAMENTO", "POSITIVE") {
-        public BigDecimal convertAmount(final BigDecimal amount) {
+        public BigDecimal defineAmount(final BigDecimal amount) {
             return amount;
         }
     };
-
 
     private String typeName;
     private String signal;
