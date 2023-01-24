@@ -30,7 +30,7 @@ class AccountsApiIntegrationTest extends BaseIntegrationTests {
         given(this.accountGatewayMock.save(any(Account.class)))
             .willReturn(accountEntity);
         //WHEN
-        final var resultActions = requestPost(dto, URI.create("http://localhost:8080/accounts/"));
+        final var resultActions = requestPost(dto, URI.create(BASE_URL_ACCOUNTS));
 
         //THEN
         resultActions.andExpect(status().isCreated());
@@ -52,7 +52,7 @@ class AccountsApiIntegrationTest extends BaseIntegrationTests {
             .willReturn(true);
 
         //WHEN
-        final var resultActions = requestPost(dto, URI.create("http://localhost:8080/accounts/"));
+        final var resultActions = requestPost(dto, URI.create(BASE_URL_ACCOUNTS));
 
         //THEN
         final var responseJson = resultActions
@@ -70,13 +70,13 @@ class AccountsApiIntegrationTest extends BaseIntegrationTests {
     @ArgumentsSource(AccountDtoProviderTests.class)
     @DisplayName(
         """
-        Deve buscar uma conta que já está salva na base de dados e encontrá-la.
+        Integration - Deve buscar uma conta que já está salva na base de dados e encontrá-la.
         """
     )
     void shouldFindWithSuccess(final AccountDto dto) throws Exception {
         //GIVEN
         final var accountEntity = toAccountEntity(dto);
-        final var uri = URI.create("http://localhost:8080/accounts/".concat(dto.getAccountId().toString()));
+        final var uri = URI.create(BASE_URL_ACCOUNTS.concat(dto.getAccountId().toString()));
         given(this.accountGatewayMock.find(dto.getAccountId()))
             .willReturn(Optional.of(accountEntity));
 

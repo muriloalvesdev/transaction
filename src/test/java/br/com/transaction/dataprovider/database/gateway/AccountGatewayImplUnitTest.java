@@ -76,7 +76,7 @@ class AccountGatewayImplUnitTest extends BaseUnitTest {
 
     @ParameterizedTest
     @MethodSource("testAccountsExistsAndNotExists")
-    @DisplayName("Deve validar se exist conta na base de dados com todos os cenarios, nesse caso. True e False.")
+    @DisplayName("Mock - Deve validar se exist conta na base de dados com todos os cenarios, nesse caso. True e False.")
     void shouldValidateExistsAccountByDocumentNumberWithAllScenarios(final boolean exists) {
         //GIVEN
         given(this.accountRepositoryMock.existsByDocumentNumber(DOCUMENT_NUMBER))

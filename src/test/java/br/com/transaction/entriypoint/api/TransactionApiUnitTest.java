@@ -3,6 +3,7 @@ package br.com.transaction.entriypoint.api;
 import br.com.transaction.BaseApiUnitTest;
 import br.com.transaction.entriypoint.dto.TransactionDto;
 import br.com.transaction.providers.TransactionDtoProviderTests;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ArgumentsSource;
 import org.springframework.http.HttpStatus;
@@ -15,6 +16,7 @@ class TransactionApiUnitTest extends BaseApiUnitTest {
 
     @ParameterizedTest
     @ArgumentsSource(TransactionDtoProviderTests.class)
+    @DisplayName("Mock - Deve salvar uma transacao na base de dados.")
     void shouldSave(final TransactionDto dto) {
         //GIVEN
         given(this.useCaseTransactionMock.save(dto))

@@ -47,7 +47,12 @@ class UseCaseTransactionImplUnitTest extends BaseUnitTest {
 
     @ParameterizedTest
     @MethodSource("transactionDtosInvalids")
-    @DisplayName("Mock - Deve tentar salvar uma transacao para cada tipo de operacoes invalidas e retornar erro.")
+    @DisplayName(
+        """
+        Mock - Deve tentar salvar uma transacao para cada
+        tipo de operacoes invalidas e retornar erro.
+        """
+    )
     void shouldTrySaveTransactionsButReturnExceptionWhenAmountIsInvalidForTypeSpecified(final TransactionDto dto) {
         //GIVEN is param
         final var operationsType = OperationsType.fromString(dto.getOperationType());

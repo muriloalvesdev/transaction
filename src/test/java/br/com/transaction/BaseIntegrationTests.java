@@ -25,9 +25,9 @@ public class BaseIntegrationTests extends BaseTest {
 
     private static final String BASE_URL = "http://localhost:8080/";
 
-    protected static final String BASE_URL_ACCOUNTS = BASE_URL.concat("accounts");
+    protected static final String BASE_URL_ACCOUNTS = BASE_URL.concat("accounts/");
 
-    protected static final String BASE_URL_TRANSACTIONS = BASE_URL.concat("transactions");
+    protected static final String BASE_URL_TRANSACTIONS = BASE_URL.concat("transactions/");
 
     @Autowired
     protected MockMvc mockMvc;

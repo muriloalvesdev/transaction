@@ -16,7 +16,7 @@ class AccountsApiUnitTest extends BaseApiUnitTest {
 
     @ParameterizedTest
     @ArgumentsSource(AccountDtoProviderTests.class)
-    @DisplayName("Integration - Deve salvar uma conta na base de dados.")
+    @DisplayName("Mock - Deve salvar uma conta na base de dados.")
     void shouldSave(final AccountDto dto) {
         //GIVEN
         given(this.useCaseAccountMock.save(dto))
@@ -35,7 +35,7 @@ class AccountsApiUnitTest extends BaseApiUnitTest {
 
     @ParameterizedTest
     @ArgumentsSource(AccountDtoProviderTests.class)
-    @DisplayName("Integration - Deve buscar uma conta salva por ID.")
+    @DisplayName("Mock - Deve buscar uma conta salva por ID.")
     void shouldFindById(final AccountDto dto) {
         //GIVEN
         given(this.useCaseAccountMock.find(dto.getAccountId()))
