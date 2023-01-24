@@ -1,6 +1,7 @@
 package br.com.transaction.entriypoint.api;
 
 import br.com.transaction.BaseIntegrationTests;
+import br.com.transaction.core.exception.AccountNotFoundException;
 import br.com.transaction.core.exception.InvalidAmountException;
 import br.com.transaction.dataprovider.database.entity.OperationsType;
 import br.com.transaction.dataprovider.database.entity.Transaction;
@@ -44,6 +45,40 @@ class TransactionApiIntegrationTest extends BaseIntegrationTests {
         verifyWasInvoked(this.accountGatewayMock, 1)
             .find(dto.getAccountId());
         verifyWasInvoked(this.transactionGateway, 1)
+            .save(any(Transaction.class));
+    }
+
+    @ParameterizedTest
+    @MethodSource("transactionDtosValids")
+    @DisplayName(
+        """
+        Integration - Deve tentar salvar uma transacao para cada tipo de operacoes validas existentes, 
+        mas todas elas não contém uma conta válida na base de dados.
+        """)
+    void shouldTrySaveTransctionButAccountNotFound(final TransactionDto dto) throws Exception {
+        //GIVEN
+        final var exceptionExpected = new AccountNotFoundException(dto.getAccountId());
+        final var responseErrorExpected = new ResponseError(exceptionExpected.getMessage(), 404);
+
+        given(this.accountGatewayMock.find(dto.getAccountId()))
+            .willReturn(Optional.empty());
+
+        //WHEN
+        final var resultActions = requestPost(dto, URI.create(BASE_URL_TRANSACTIONS));
+
+        //THEN
+        final var responseJson = resultActions
+            .andExpect(status().isNotFound())
+            .andReturn()
+            .getResponse()
+            .getContentAsString();
+
+        final var responseErrorActual = this.objectMapper.readValue(responseJson, ResponseError.class);
+
+        compareUsingRecursiveComparison(responseErrorExpected, responseErrorActual);
+        verifyWasInvoked(this.accountGatewayMock, 1)
+            .find(dto.getAccountId());
+        verifyWasInvoked(this.transactionGateway, 0)
             .save(any(Transaction.class));
     }
 
