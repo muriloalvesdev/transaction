@@ -5,6 +5,7 @@ import br.com.transaction.core.exception.AccountNotFoundException;
 import br.com.transaction.core.exception.InvalidAmountException;
 import br.com.transaction.dataprovider.database.entity.OperationsType;
 import br.com.transaction.dataprovider.database.entity.Transaction;
+import br.com.transaction.dataprovider.database.exception.InvalidOperationTypeException;
 import br.com.transaction.entriypoint.dto.ResponseError;
 import br.com.transaction.entriypoint.dto.TransactionDto;
 import org.junit.jupiter.api.DisplayName;
@@ -89,6 +90,39 @@ class TransactionApiIntegrationTest extends BaseIntegrationTests {
         //GIVEN is param
         final var responseErrorExpected = new ResponseError(
             new InvalidAmountException(OperationsType.fromString(dto.getOperationType())).getMessage(),
+            HttpStatus.BAD_REQUEST.value()
+        );
+
+        //WHEN
+        final var resultActions = requestPost(dto, URI.create(BASE_URL_TRANSACTIONS));
+
+        //THEN
+        final var responseJson = resultActions
+            .andExpect(status().isBadRequest())
+            .andReturn()
+            .getResponse()
+            .getContentAsString();
+
+        final var responseErrorActual = this.objectMapper.readValue(responseJson, ResponseError.class);
+
+        compareUsingRecursiveComparison(responseErrorExpected, responseErrorActual);
+        verifyWasInvoked(this.accountGatewayMock, 0)
+            .find(dto.getAccountId());
+        verifyWasInvoked(this.transactionGateway, 0)
+            .save(any(Transaction.class));
+    }
+
+    @ParameterizedTest
+    @MethodSource("transactionDtosInvalidOperationTypes")
+    @DisplayName(
+        """
+        Integration - Deve tentar salvar uma transacao para cada tipo de operacoes 
+        com operation_types invalidos e retornar erro.
+        """)
+    void shouldTrySaveTransactionsButReturnExceptionWhenOperationTypesIsInvalid(final TransactionDto dto) throws Exception {
+        //GIVEN is param
+        final var responseErrorExpected = new ResponseError(
+            new InvalidOperationTypeException(dto.getOperationType()).getMessage(),
             HttpStatus.BAD_REQUEST.value()
         );
 

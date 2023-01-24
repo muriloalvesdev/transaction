@@ -76,6 +76,13 @@ class BaseTest {
             new TransactionDto(ACCOUNT_ID, SAQUE.getTypeName(), AMOUNT_POSITIVE)).map(Arguments::of);
     }
 
+    protected static Stream<Arguments> transactionDtosInvalidOperationTypes() {
+        return Stream.of(new TransactionDto(ACCOUNT_ID, "anything", AMOUNT_NEGATIVE),
+            new TransactionDto(ACCOUNT_ID, "anything", AMOUNT_POSITIVE),
+            new TransactionDto(ACCOUNT_ID, "anything", AMOUNT_POSITIVE),
+            new TransactionDto(ACCOUNT_ID, "anything", AMOUNT_POSITIVE)).map(Arguments::of);
+    }
+
     protected static Stream<Arguments> transactionDtosValids() {
         return Stream.of(new TransactionDto(UUID.randomUUID(), PAGAMENTO.getTypeName(), AMOUNT_POSITIVE),
             new TransactionDto(UUID.randomUUID(), COMPRA_A_VISTA.getTypeName(), AMOUNT_NEGATIVE),
