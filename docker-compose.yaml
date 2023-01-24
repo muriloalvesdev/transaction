@@ -1,21 +1,12 @@
 version: "3"
 services:
-    postgres:
-        image: postgres:latest
-        network_mode: bridge
-        container_name: postgres
-        volumes:
-            - postgres-data:/var/lib/postgresql/data
-        expose:
-            - 5432
+    h2:
+        container_name: 'h2'
+        hostname: 'h2'
+        image: oscarfonts/h2
         ports:
-            - "5432:5432"
-        environment:
-            - POSTGRES_PASSWORD=postgres
-            - POSTGRES_IP_ADDRESS=172.17.0.2
-            - POSTGRES_USER=postgres
-            - POSTGRES_DB=transaction
-        restart: unless-stopped
+            - "8181:8181"
+            - "1521:1521"
     transaction:
         image: muriloalvesdev/transaction
         network_mode: bridge
@@ -26,8 +17,4 @@ services:
             - "8080:8080"
         restart: unless-stopped
         depends_on:
-            - postgres
-        links:
-            - postgres
-volumes:
-    postgres-data:
+            - h2
