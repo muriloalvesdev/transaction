@@ -34,6 +34,10 @@ class AccountsApiIntegrationTest extends BaseIntegrationTests {
 
         //THEN
         resultActions.andExpect(status().isCreated());
+        verifyWasInvoked(this.accountGatewayMock, 1)
+            .existsByDocumentNumber(dto.getDocumentNumber());
+        verifyWasInvoked(this.accountGatewayMock, 1)
+            .save(any(Account.class));
     }
 
     @ParameterizedTest
@@ -64,6 +68,8 @@ class AccountsApiIntegrationTest extends BaseIntegrationTests {
         final var responseErrorActual = this.objectMapper.readValue(responseJson, ResponseError.class);
 
         compareUsingRecursiveComparison(responseErrorExpected, responseErrorActual);
+        verifyWasInvoked(this.accountGatewayMock, 1)
+            .existsByDocumentNumber(dto.getDocumentNumber());
     }
 
     @ParameterizedTest

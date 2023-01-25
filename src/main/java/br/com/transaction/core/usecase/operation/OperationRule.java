@@ -6,10 +6,6 @@ public interface OperationRule {
 
     BigDecimal defineAmount(BigDecimal amount);
 
-    boolean isPositive();
-
-    boolean isNegative();
-
     default boolean isAmountZero(final BigDecimal amount) {
         return amount.compareTo(BigDecimal.ZERO) == 0;
     }

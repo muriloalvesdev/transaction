@@ -20,7 +20,7 @@ public class ApplicationConfig {
     private final AccountRepository accountRepository;
     private final TransactionRepository transactionRepository;
 
-    public ApplicationConfig(final AccountRepository accountRepository, final TransactionRepository transactionRepository) {
+    ApplicationConfig(final AccountRepository accountRepository, final TransactionRepository transactionRepository) {
         this.accountRepository = accountRepository;
         this.transactionRepository = transactionRepository;
     }

@@ -19,14 +19,13 @@ class TransactionApi {
     private final UseCaseTransaction usecase;
 
     @PostMapping()
-    public ResponseEntity<Object> save(@RequestBody @Validated final TransactionDto dto) {
-        final var uuid = this.usecase.save(dto);
-        return ResponseEntity.created(
-                ServletUriComponentsBuilder.fromCurrentContextPath()
-                    .path("/transactions/{id}")
-                    .buildAndExpand(uuid)
-                    .toUri())
-            .build();
+    public ResponseEntity<Void> save(@RequestBody @Validated final TransactionDto dto) {
+        final var transactionId = this.usecase.save(dto);
+        final var location = ServletUriComponentsBuilder.fromCurrentContextPath()
+            .path("/transactions/{id}")
+            .buildAndExpand(transactionId)
+            .toUri();
+        return ResponseEntity.created(location).build();
     }
 
 }

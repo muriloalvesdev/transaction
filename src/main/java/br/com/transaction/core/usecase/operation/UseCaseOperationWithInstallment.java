@@ -8,12 +8,4 @@ public class UseCaseOperationWithInstallment implements OperationRule {
         return amount.negate();
     }
 
-    public boolean isPositive() {
-        return false;
-    }
-
-    public boolean isNegative() {
-        return true;
-    }
-
 }

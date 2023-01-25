@@ -25,12 +25,12 @@ public class UseCaseTransactionImpl implements UseCaseTransaction {
         this.accountGateway = accountGateway;
     }
 
-    public String save(final TransactionDto dto) {
-        final var type = OperationsType.fromString(dto.getOperationType());
-        validateTransactionDto(dto, type);
+    public String save(final TransactionDto transactionDto) {
+        final var type = OperationsType.fromString(transactionDto.getOperationType());
+        validateTransactionDto(transactionDto, type);
 
-        final var amount = type.getRule().defineAmount(dto.getAmount());
-        final var accountEntity = getAccountEntity(dto);
+        final var amount = type.getRule().defineAmount(transactionDto.getAmount());
+        final var accountEntity = getAccountEntity(transactionDto);
         final var uuid = UUID.randomUUID().toString();
 
         final var transactionEntity = Transaction.builder()
@@ -43,25 +43,33 @@ public class UseCaseTransactionImpl implements UseCaseTransaction {
         return this.transactionGateway.save(transactionEntity).getUuid();
     }
 
-    private void validateTransactionDto(final TransactionDto dto, final OperationsType type) {
-        if (isAmountInvalid(dto.getAmount(), type.getRule())) {
-            final var sign = type.getRule().isPositive() ? "POSITIVE" : "NEGATIVE";
+    /**
+     *
+     * @Description basicamente esse método verifica se as regras não estão invertidas, ou seja,
+     * se o valor(amount) condiz com a regra(OperationRule).
+     */
+    private void validateTransactionDto(
+        final TransactionDto transactionDto,
+        final OperationsType type) {
+        final var rule = type.getRule();
+        final var amount = transactionDto.getAmount();
+        if (isAmountInvalid(amount, rule)) {
+            final var sign = rule.isAmountPositive(amount) ? "POSITIVE" : "NEGATIVE";
             throw new InvalidAmountException(type, sign);
         }
     }
 
     private boolean isAmountInvalid(final BigDecimal amount, final OperationRule rule) {
-        return rule.isAmountNegative(amount) && rule.isPositive() ||
-            rule.isAmountPositive(amount) && rule.isNegative() ||
+        return rule.isAmountPositive(amount) && rule.isAmountNegative(amount) ||
+            rule.isAmountNegative(amount) && rule.isAmountPositive(amount) ||
             rule.isAmountZero(amount);
     }
 
-
     private Account getAccountEntity(
-        final TransactionDto dto) {
-        final var accountId = dto.getAccountId();
+        final TransactionDto transactionDto) {
+        final var accountId = transactionDto.getAccountId();
         return this.accountGateway.find(accountId)
-            .orElseThrow(() -> new AccountNotFoundException(dto.getAccountId()));
+            .orElseThrow(() -> new AccountNotFoundException(transactionDto.getAccountId()));
     }
 
 }

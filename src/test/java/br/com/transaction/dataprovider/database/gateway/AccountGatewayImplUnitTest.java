@@ -12,7 +12,6 @@ import org.junit.jupiter.params.provider.ArgumentsSource;
 import org.junit.jupiter.params.provider.MethodSource;
 
 import java.util.Optional;
-import java.util.UUID;
 import java.util.stream.Stream;
 
 import static br.com.transaction.ConstantsTests.ACCOUNT_ID;

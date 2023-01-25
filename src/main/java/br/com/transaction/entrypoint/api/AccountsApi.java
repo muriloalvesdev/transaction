@@ -21,15 +21,14 @@ class AccountsApi {
     private final UseCaseAccount useCaseAccount;
 
     @PostMapping
-    public ResponseEntity<Object> save(
+    public ResponseEntity<Void> save(
         @RequestBody @Validated final AccountDto dto) {
-        final var uuid = this.useCaseAccount.save(dto);
-        return ResponseEntity.created(
-                ServletUriComponentsBuilder.fromCurrentContextPath()
-                    .path("/accounts/{id}")
-                    .buildAndExpand(uuid)
-                    .toUri())
-            .build();
+        final var accountId = this.useCaseAccount.save(dto);
+        final var location = ServletUriComponentsBuilder.fromCurrentContextPath()
+            .path("/accounts/{id}")
+            .buildAndExpand(accountId)
+            .toUri();
+        return ResponseEntity.created(location).build();
     }
 
     @GetMapping("{accountId}")
