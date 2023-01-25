@@ -15,6 +15,7 @@ import java.util.stream.Stream;
 import static br.com.transaction.ConstantsTests.ACCOUNT_ID;
 import static br.com.transaction.ConstantsTests.AMOUNT_NEGATIVE;
 import static br.com.transaction.ConstantsTests.AMOUNT_POSITIVE;
+import static br.com.transaction.ConstantsTests.AMOUNT_ZERO;
 import static br.com.transaction.ConstantsTests.COMPRA_A_VISTA;
 import static br.com.transaction.ConstantsTests.COMPRA_PARCELADA;
 import static br.com.transaction.ConstantsTests.DOCUMENT_NUMBER;
@@ -73,7 +74,11 @@ class BaseTest {
         return Stream.of(new TransactionDto(ACCOUNT_ID, PAGAMENTO.getTypeName(), AMOUNT_NEGATIVE),
             new TransactionDto(ACCOUNT_ID, COMPRA_A_VISTA.getTypeName(), AMOUNT_POSITIVE),
             new TransactionDto(ACCOUNT_ID, COMPRA_PARCELADA.getTypeName(), AMOUNT_POSITIVE),
-            new TransactionDto(ACCOUNT_ID, SAQUE.getTypeName(), AMOUNT_POSITIVE)).map(Arguments::of);
+            new TransactionDto(ACCOUNT_ID, SAQUE.getTypeName(), AMOUNT_POSITIVE),
+            new TransactionDto(ACCOUNT_ID, PAGAMENTO.getTypeName(), AMOUNT_ZERO),
+            new TransactionDto(ACCOUNT_ID, COMPRA_A_VISTA.getTypeName(), AMOUNT_ZERO),
+            new TransactionDto(ACCOUNT_ID, COMPRA_PARCELADA.getTypeName(), AMOUNT_ZERO),
+            new TransactionDto(ACCOUNT_ID, SAQUE.getTypeName(), AMOUNT_ZERO)).map(Arguments::of);
     }
 
     protected static Stream<Arguments> transactionDtosInvalidOperationTypes() {

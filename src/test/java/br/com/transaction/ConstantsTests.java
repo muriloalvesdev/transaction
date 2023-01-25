@@ -14,4 +14,5 @@ public interface ConstantsTests {
     OperationsType SAQUE = OperationsType.SAQUE;
     BigDecimal AMOUNT_POSITIVE = BigDecimal.valueOf(100.00);
     BigDecimal AMOUNT_NEGATIVE = AMOUNT_POSITIVE.negate();
+    BigDecimal AMOUNT_ZERO = BigDecimal.ZERO;
 }

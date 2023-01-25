@@ -55,7 +55,8 @@ class UseCaseTransactionImplUnitTest extends BaseUnitTest {
     void shouldTrySaveTransactionsButReturnExceptionWhenAmountIsInvalidForTypeSpecified(final TransactionDto dto) {
         //GIVEN is param
         final var operationsType = OperationsType.fromString(dto.getOperationType());
-        final var exceptionExpected = new InvalidAmountException(operationsType);
+        final var sign = operationsType.getRule().isPositive() ? "POSITIVE" : "NEGATIVE";
+        final var exceptionExpected = new InvalidAmountException(operationsType, sign);
 
         //WHEN
         final var exceptionActual =
