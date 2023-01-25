@@ -71,4 +71,11 @@ class UseCaseTransactionImplUnitTest extends BaseUnitTest {
         isEquals(exceptionExpected.getMessage(), exceptionActual.getMessage());
     }
 
+    private static Transaction toTransactionEntity(final TransactionDto dto) {
+        return Transaction.builder()
+            .account(toAccountEntity(dto.getAccountId()))
+            .type(OperationsType.fromString(dto.getOperationType()))
+            .amount(dto.getAmount()).build();
+    }
+
 }

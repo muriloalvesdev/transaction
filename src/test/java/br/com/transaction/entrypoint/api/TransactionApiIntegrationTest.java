@@ -3,6 +3,7 @@ package br.com.transaction.entrypoint.api;
 import br.com.transaction.BaseIntegrationTests;
 import br.com.transaction.core.exception.AccountNotFoundException;
 import br.com.transaction.core.exception.InvalidAmountException;
+import br.com.transaction.dataprovider.database.entity.Account;
 import br.com.transaction.dataprovider.database.entity.OperationsType;
 import br.com.transaction.dataprovider.database.entity.Transaction;
 import br.com.transaction.dataprovider.database.exception.InvalidOperationTypeException;
@@ -10,6 +11,7 @@ import br.com.transaction.entrypoint.dto.ResponseError;
 import br.com.transaction.entrypoint.dto.TransactionDto;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 import org.springframework.http.HttpStatus;
 
@@ -17,7 +19,11 @@ import java.net.URI;
 import java.util.Optional;
 import java.util.Random;
 import java.util.UUID;
+import java.util.stream.Stream;
 
+import static br.com.transaction.ConstantsTests.ACCOUNT_ID;
+import static br.com.transaction.ConstantsTests.AMOUNT_NEGATIVE;
+import static br.com.transaction.ConstantsTests.AMOUNT_POSITIVE;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -143,6 +149,31 @@ class TransactionApiIntegrationTest extends BaseIntegrationTests {
             .find(dto.getAccountId());
         verifyWasInvoked(this.transactionGateway, 0)
             .save(any(Transaction.class));
+    }
+
+    private static Account toAccountEntity(
+        final String accountId,
+        final String documentNumber) {
+        return Account.builder()
+            .uuid(accountId)
+            .documentNumber(documentNumber)
+            .build();
+    }
+
+    private Transaction toTransactionEntity(
+        final TransactionDto dto,
+        final Account accountEntity) {
+        return Transaction.builder()
+            .account(accountEntity)
+            .type(OperationsType.fromString(dto.getOperationType()))
+            .amount(dto.getAmount()).build();
+    }
+
+    private static Stream<Arguments> transactionDtosInvalidOperationTypes() {
+        return Stream.of(new TransactionDto(ACCOUNT_ID, "anything", AMOUNT_NEGATIVE),
+            new TransactionDto(ACCOUNT_ID, "anything", AMOUNT_POSITIVE),
+            new TransactionDto(ACCOUNT_ID, "anything", AMOUNT_POSITIVE),
+            new TransactionDto(ACCOUNT_ID, "anything", AMOUNT_POSITIVE)).map(Arguments::of);
     }
 
 }
