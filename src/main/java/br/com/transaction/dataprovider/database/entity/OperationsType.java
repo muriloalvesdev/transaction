@@ -1,38 +1,26 @@
 package br.com.transaction.dataprovider.database.entity;
 
+import br.com.transaction.core.usecase.operation.OperationRule;
+import br.com.transaction.core.usecase.operation.UseCaseOperationPayment;
+import br.com.transaction.core.usecase.operation.UseCaseOperationWiithdrawal;
+import br.com.transaction.core.usecase.operation.UseCaseOperationWithInstallment;
+import br.com.transaction.core.usecase.operation.UseCaseOperationWithoutInstallment;
 import br.com.transaction.dataprovider.database.exception.InvalidOperationTypeException;
 
-import java.math.BigDecimal;
 import java.util.Arrays;
 
-public enum OperationsType implements DefineAmount {
-    COMPRA_A_VISTA("COMPRA A VISTA", "NEGATIVE") {
-        public BigDecimal defineAmount(final BigDecimal amount) {
-            return amount.negate();
-        }
-    },
-    COMPRA_PARCELADA("COMPRA PARCELADA", "NEGATIVE") {
-        public BigDecimal defineAmount(final BigDecimal amount) {
-            return amount.negate();
-        }
-    },
-    SAQUE("SAQUE", "NEGATIVE") {
-        public BigDecimal defineAmount(final BigDecimal amount) {
-            return amount.negate();
-        }
-    },
-    PAGAMENTO("PAGAMENTO", "POSITIVE") {
-        public BigDecimal defineAmount(final BigDecimal amount) {
-            return amount;
-        }
-    };
+public enum OperationsType {
+    COMPRA_A_VISTA("COMPRA A VISTA", new UseCaseOperationWithoutInstallment()),
+    COMPRA_PARCELADA("COMPRA PARCELADA", new UseCaseOperationWithInstallment()),
+    SAQUE("SAQUE", new UseCaseOperationWiithdrawal()),
+    PAGAMENTO("PAGAMENTO", new UseCaseOperationPayment());
 
-    private String typeName;
-    private String signal;
+    private final String typeName;
+    private final OperationRule rule;
 
-    OperationsType(final String typeName, final String signal) {
+    OperationsType(final String typeName, final OperationRule rule) {
         this.typeName = typeName;
-        this.signal = signal;
+        this.rule = rule;
     }
 
     public static OperationsType fromString(final String typeName) {
@@ -42,19 +30,11 @@ public enum OperationsType implements DefineAmount {
             .orElseThrow(() -> new InvalidOperationTypeException(typeName));
     }
 
+    public OperationRule getRule() {
+        return this.rule;
+    }
+
     public String getTypeName() {
         return this.typeName;
-    }
-
-    public String getSignal() {
-        return this.signal;
-    }
-
-    public boolean isPositive() {
-        return this.getSignal().equalsIgnoreCase("POSITIVE");
-    }
-
-    public boolean isNegative() {
-        return !isPositive();
     }
 }

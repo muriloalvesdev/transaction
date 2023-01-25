@@ -1,5 +1,6 @@
 package br.com.transaction.entrypoint.dto;
 
+import com.sun.istack.NotNull;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -12,12 +13,17 @@ import java.math.BigDecimal;
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class TransactionDto {
 
+    @NotNull
     private String accountId;
+
+    @NotNull
     private String operationType;
+
+    @NotNull
     private BigDecimal amount;
 
     public boolean isAmountPositive() {
-        return this.amount.intValue() > 0;
+        return this.amount.signum() == 1;
     }
 
     public boolean isAmountNegative() {

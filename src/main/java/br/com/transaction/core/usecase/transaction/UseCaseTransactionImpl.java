@@ -4,11 +4,13 @@ import br.com.transaction.core.exception.AccountNotFoundException;
 import br.com.transaction.core.exception.InvalidAmountException;
 import br.com.transaction.core.gateway.AccountGateway;
 import br.com.transaction.core.gateway.TransactionGateway;
+import br.com.transaction.core.usecase.operation.OperationRule;
 import br.com.transaction.dataprovider.database.entity.Account;
 import br.com.transaction.dataprovider.database.entity.OperationsType;
 import br.com.transaction.dataprovider.database.entity.Transaction;
 import br.com.transaction.entrypoint.dto.TransactionDto;
 
+import java.math.BigDecimal;
 import java.util.UUID;
 
 public class UseCaseTransactionImpl implements UseCaseTransaction {
@@ -24,46 +26,41 @@ public class UseCaseTransactionImpl implements UseCaseTransaction {
     }
 
     public String save(final TransactionDto dto) {
-        final OperationsType type = OperationsType.fromString(dto.getOperationType());
+        final var type = OperationsType.fromString(dto.getOperationType());
+        validateTransactionDto(dto, type);
 
-        final var builder = Transaction.builder()
-            .type(type);
+        final var amount = type.getRule().defineAmount(dto.getAmount());
+        final var accountEntity = getAccountEntity(dto);
+        final var uuid = UUID.randomUUID().toString();
 
-        setAmount(dto, type, builder);
-
-        final Account accountEntity = getAccountEntity(dto);
-
-        final Transaction transactionEntity = builder
+        final var transactionEntity = Transaction.builder()
+            .type(type)
+            .amount(amount)
             .account(accountEntity)
-            .uuid(UUID.randomUUID().toString())
+            .uuid(uuid)
             .build();
 
         return this.transactionGateway.save(transactionEntity).getUuid();
     }
 
-    private void setAmount(
-        final TransactionDto transactionDto,
-        final OperationsType type,
-        final Transaction.TransactionBuilder builder) {
-
-        if (amountInvalid(transactionDto, type)) {
-            throw new InvalidAmountException(type);
+    private void validateTransactionDto(final TransactionDto dto, final OperationsType type) {
+        if (isAmountInvalid(dto.getAmount(), type.getRule())) {
+            final var sign = type.getRule().isPositive() ? "POSITIVE" : "NEGATIVE";
+            throw new InvalidAmountException(type, sign);
         }
-
-        final var amount = type.defineAmount(transactionDto.getAmount());
-        builder.amount(amount);
     }
 
-    private boolean amountInvalid(
-        final TransactionDto transactionDto,
-        final OperationsType type) {
-        return transactionDto.isAmountPositive() && type.isNegative() ||
-            transactionDto.isAmountNegative() && type.isPositive();
+    private boolean isAmountInvalid(final BigDecimal amount, final OperationRule rule) {
+        return rule.isAmountNegative(amount) && rule.isPositive() ||
+            rule.isAmountPositive(amount) && rule.isNegative() ||
+            rule.isAmountZero(amount);
     }
+
 
     private Account getAccountEntity(
         final TransactionDto dto) {
-        return this.accountGateway.find(dto.getAccountId())
+        final var accountId = dto.getAccountId();
+        return this.accountGateway.find(accountId)
             .orElseThrow(() -> new AccountNotFoundException(dto.getAccountId()));
     }
 
