@@ -2,24 +2,28 @@ package br.com.transaction.core.usecase.operation;
 
 import java.math.BigDecimal;
 
-public interface OperationRule {
+public abstract class OperationRule {
 
-    BigDecimal defineAmount(BigDecimal amount);
+    public boolean isOperationInvalid(final BigDecimal amount) {
+        return isAmountPositive(amount) && mustBeNegative() ||
+            isAmountNegative(amount) && mustBePositive() ||
+            isAmountZero(amount);
+    }
 
-    default boolean isAmountZero(final BigDecimal amount) {
+    private boolean isAmountZero(final BigDecimal amount) {
         return amount.compareTo(BigDecimal.ZERO) == 0;
     }
 
-    default boolean isAmountNegative(final BigDecimal amount) {
+    private boolean isAmountNegative(final BigDecimal amount) {
         return amount.compareTo(BigDecimal.ZERO) < 0;
     }
 
-    default boolean isAmountPositive(final BigDecimal amount) {
+    public boolean isAmountPositive(final BigDecimal amount) {
         return amount.compareTo(BigDecimal.ZERO) > 0;
     }
 
-    boolean mustBePositive();
+    abstract boolean mustBePositive();
 
-    boolean mustBeNegative();
+    abstract boolean mustBeNegative();
 
 }

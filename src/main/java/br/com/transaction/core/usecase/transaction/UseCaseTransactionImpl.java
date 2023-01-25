@@ -4,13 +4,11 @@ import br.com.transaction.core.exception.AccountNotFoundException;
 import br.com.transaction.core.exception.InvalidAmountException;
 import br.com.transaction.core.gateway.AccountGateway;
 import br.com.transaction.core.gateway.TransactionGateway;
-import br.com.transaction.core.usecase.operation.OperationRule;
 import br.com.transaction.dataprovider.database.entity.Account;
 import br.com.transaction.dataprovider.database.entity.OperationsType;
 import br.com.transaction.dataprovider.database.entity.Transaction;
 import br.com.transaction.entrypoint.dto.TransactionDto;
 
-import java.math.BigDecimal;
 import java.util.UUID;
 
 public class UseCaseTransactionImpl implements UseCaseTransaction {
@@ -29,10 +27,9 @@ public class UseCaseTransactionImpl implements UseCaseTransaction {
         final var type = OperationsType.fromString(transactionDto.getOperationType());
         validateTransactionDto(transactionDto, type);
 
-        final var amount = type.getRule().defineAmount(transactionDto.getAmount());
         final var accountEntity = getAccountEntity(transactionDto);
         final var uuid = UUID.randomUUID().toString();
-
+        final var amount = transactionDto.getAmount();
         final var transactionEntity = Transaction.builder()
             .type(type)
             .amount(amount)
@@ -43,26 +40,15 @@ public class UseCaseTransactionImpl implements UseCaseTransaction {
         return this.transactionGateway.save(transactionEntity).getUuid();
     }
 
-    /**
-     *
-     * @Description basicamente esse método verifica se as regras não estão invertidas, ou seja,
-     * se o valor(amount) condiz com a regra(OperationRule).
-     */
     private void validateTransactionDto(
         final TransactionDto transactionDto,
         final OperationsType type) {
         final var rule = type.getRule();
         final var amount = transactionDto.getAmount();
-        if (isAmountInvalid(amount, rule)) {
+        if (rule.isOperationInvalid(amount)) {
             final var sign = rule.isAmountPositive(amount) ? "POSITIVE" : "NEGATIVE";
             throw new InvalidAmountException(type, sign);
         }
-    }
-
-    private boolean isAmountInvalid(final BigDecimal amount, final OperationRule rule) {
-        return rule.isAmountPositive(amount) && rule.mustBeNegative() ||
-            rule.isAmountNegative(amount) && rule.mustBePositive() ||
-            rule.isAmountZero(amount);
     }
 
     private Account getAccountEntity(

@@ -1,12 +1,6 @@
 package br.com.transaction.core.usecase.operation;
 
-import java.math.BigDecimal;
-
-public class UseCaseOperationWithInstallment implements OperationRule {
-
-    public BigDecimal defineAmount(final BigDecimal amount) {
-        return amount.negate();
-    }
+public class UseCaseOperationWithInstallment extends OperationRule {
 
     public boolean mustBePositive() {
         return false;
