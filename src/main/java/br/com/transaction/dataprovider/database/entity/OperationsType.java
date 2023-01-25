@@ -23,6 +23,12 @@ public enum OperationsType {
         this.rule = rule;
     }
 
+    /**
+     * Recupera o tipo da operação pelo nome
+     * @param typeName nome do tipo da operação
+     * @return tipo de operação correspondente
+     * @throws InvalidOperationTypeException se não houver nenhum tipo de operação com o nome informado.
+     */
     public static OperationsType fromString(final String typeName) {
         return Arrays.stream(OperationsType.values())
             .filter(operationType -> operationType.getTypeName().equalsIgnoreCase(typeName))

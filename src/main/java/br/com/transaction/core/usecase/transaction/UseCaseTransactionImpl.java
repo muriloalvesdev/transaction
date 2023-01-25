@@ -46,7 +46,7 @@ public class UseCaseTransactionImpl implements UseCaseTransaction {
         final var rule = type.getRule();
         final var amount = transactionDto.getAmount();
         if (rule.isOperationInvalid(amount)) {
-            final var sign = rule.isAmountPositive(amount) ? "POSITIVE" : "NEGATIVE";
+            final var sign = rule.isPositive(amount) ? "POSITIVE" : "NEGATIVE";
             throw new InvalidAmountException(type, sign);
         }
     }

@@ -22,12 +22,4 @@ public class TransactionDto {
     @NotNull
     private BigDecimal amount;
 
-    public boolean isAmountPositive() {
-        return this.amount.signum() == 1;
-    }
-
-    public boolean isAmountNegative() {
-        return !isAmountPositive();
-    }
-
 }
