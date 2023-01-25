@@ -8,4 +8,12 @@ public class UseCaseOperationPayment implements OperationRule {
         return amount;
     }
 
+    public boolean mustBePositive() {
+        return true;
+    }
+
+    public boolean mustBeNegative() {
+        return false;
+    }
+
 }

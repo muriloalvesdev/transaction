@@ -18,4 +18,8 @@ public interface OperationRule {
         return amount.compareTo(BigDecimal.ZERO) > 0;
     }
 
+    boolean mustBePositive();
+
+    boolean mustBeNegative();
+
 }

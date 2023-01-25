@@ -60,8 +60,8 @@ public class UseCaseTransactionImpl implements UseCaseTransaction {
     }
 
     private boolean isAmountInvalid(final BigDecimal amount, final OperationRule rule) {
-        return rule.isAmountPositive(amount) && rule.isAmountNegative(amount) ||
-            rule.isAmountNegative(amount) && rule.isAmountPositive(amount) ||
+        return rule.isAmountPositive(amount) && rule.mustBeNegative() ||
+            rule.isAmountNegative(amount) && rule.mustBePositive() ||
             rule.isAmountZero(amount);
     }
 

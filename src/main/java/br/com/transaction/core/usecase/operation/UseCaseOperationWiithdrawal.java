@@ -8,4 +8,12 @@ public class UseCaseOperationWiithdrawal implements OperationRule {
         return amount.negate();
     }
 
+    public boolean mustBePositive() {
+        return false;
+    }
+
+    public boolean mustBeNegative() {
+        return true;
+    }
+
 }

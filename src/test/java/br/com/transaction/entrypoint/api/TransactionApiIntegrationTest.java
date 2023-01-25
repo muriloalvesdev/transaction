@@ -95,7 +95,7 @@ class TransactionApiIntegrationTest extends BaseIntegrationTests {
     void shouldTrySaveTransactionsButReturnExceptionWhenAmountIsInvalidForTypeSpecified(final TransactionDto dto) throws Exception {
         //GIVEN is param
         final var operationsType = OperationsType.fromString(dto.getOperationType());
-        final var sign = operationsType.getRule().isAmountPositive() ? "POSITIVE" : "NEGATIVE";
+        final var sign = operationsType.getRule().isAmountPositive(dto.getAmount()) ? "POSITIVE" : "NEGATIVE";
         final var exceptionExpected = new InvalidAmountException(operationsType, sign);
         final var responseErrorExpected = new ResponseError(exceptionExpected.getMessage(), HttpStatus.BAD_REQUEST.value());
 
