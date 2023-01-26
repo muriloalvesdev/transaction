@@ -10,9 +10,29 @@ public abstract class OperationRule {
      * @return true se a operação for inválida, false caso contrário
      */
     public boolean isOperationInvalid(final BigDecimal amount) {
-        return isPositive(amount) && mustBeNegative() ||
-            isNegative(amount) && mustBePositive() ||
+        return isAmountPositiveAndRuleRequiresNegative(amount) ||
+            isAmountNegativeAndRuleRequiresPositive(amount) ||
             isZero(amount);
+    }
+
+    /**
+     * Verifica se o valor é positivo e a regra requerida deve ser negativa, ou seja,
+     * se a regra está invertida.
+     * @param amount
+     * @return true se a regra estiver invertida, false caso contrário
+     */
+    private boolean isAmountPositiveAndRuleRequiresNegative(final BigDecimal amount) {
+        return isPositive(amount) && mustBeNegative();
+    }
+
+    /**
+     * Verifica se o valor é negativo e a regra requerida deve ser positiva, ou seja,
+     * se a regra está invertida.
+     * @param amount
+     * @return true se a regra estiver invertida, false caso contrário
+     */
+    private boolean isAmountNegativeAndRuleRequiresPositive(final BigDecimal amount) {
+        return isNegative(amount) && mustBePositive();
     }
 
     /**
