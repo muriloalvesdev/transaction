@@ -83,13 +83,13 @@ public class UseCaseTransactionImpl implements UseCaseTransaction {
 
     private void validateLimit(
         final BigDecimal limit) {
-        if (limit.intValue() == 0) {
+        if (BigDecimal.ZERO.compareTo(limit) >= 0) {
             throw new ZeroBalanceException();
         }
     }
 
     private void validateNewAmount(final BigDecimal newAmount) {
-        if (newAmount.intValue() < 0) {
+        if (newAmount.compareTo(BigDecimal.ZERO) < 0)  {
             throw new BalanceNegativeException();
         }
     }
