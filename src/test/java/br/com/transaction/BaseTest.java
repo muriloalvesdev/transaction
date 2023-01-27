@@ -134,7 +134,9 @@ class BaseTest {
      * normalmente terá uma data diferente.
      */
     protected void compareUsingRecursiveComparison(final Object expected, final Object actual, final String... ignoreFields) {
-        assertThat(actual).usingRecursiveComparison().ignoringFields(ignoreFields).isEqualTo(expected);
+        assertThat(actual).usingRecursiveComparison()
+            .ignoringFields(ignoreFields)
+            .isEqualTo(expected);
     }
 
     /**
